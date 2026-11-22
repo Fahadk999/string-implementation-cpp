@@ -23,14 +23,17 @@ String& String::operator = (String&& other) noexcept {
 
 void String::Reserve (const std::size_t& newCap) {
     // cap will be 2 pwr always
+    char* tempStr;
     if (newCap > 0) {
         this->capacity = 1;
-        while (this->capacity+1 < newCap) {
+        while (this->capacity+1 <= newCap) {
             this->capacity *= 2; 
         }
         if (this->str != nullptr) {
+            tempStr = this->str;
             delete[] this->str;
         }
         this->str = new char[this->capacity+1];
+        StrCpy(*this, tempStr);
     }
 }
